@@ -48,7 +48,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Notes_project.wsgi.application'
+WSGI_APPLICATION = 'Notes.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
