@@ -1,10 +1,12 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView
 
 # Create your views here.
-def home(request):
-    return render(request,'welcome.html')
+class HomeView(TemplateView):
+    template_name="welcome.html"
 
-@login_required(login_url='/admin')
-def authorized(request):
-    return render(request,'authorized.html')
+
+class AuthorizedView(LoginRequiredMixin,TemplateView):
+    template_name ='authorized.html'
+    login_url='/admin'
