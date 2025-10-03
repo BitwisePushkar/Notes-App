@@ -19,10 +19,10 @@
             <strong>{{ note.title }}</strong>
           </div>
           <div class="card-body">
-            <p class="card-text">{{ note.text }}</p>
+            <p class="card-text">{{ note.text|truncatechars:100 }}</p>
           </div>
           <div class="card-footer bg-light text-end">
-            <a href="{% url 'notes.detail' pk=note.id %}" class="btn btn-outline-success btn-sm " tabindex="-1" aria-disabled="true">
+            <a href="{% url 'notes.detail' pk=note.id %}" class="btn btn-outline-success btn-sm">
               View Details
             </a>
           </div>

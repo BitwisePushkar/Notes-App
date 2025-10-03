@@ -1,17 +1,18 @@
+
 {% extends "base.html" %}
 
 {% block content %}
 <div class="row justify-content-center">
   <div class="col-md-6">
     <div class="card shadow-sm">
-      <div class="card-header">
-        <h4 class="mb-0">Please fill the form</h4>
+      <div class="card-header bg-success text-white">
+        <h4 class="mb-0">Sign-Up Now</h4>
       </div>
       <div class="card-body">
         <form action="" method="post" novalidate>
           {% csrf_token %}
           {{ form.as_p }}
-          <input type="submit" class="btn btn-success mt-3" value="Submit" />
+          <button type="submit" class="btn btn-success btn-sm">Sign up</button>
         </form>
       </div>
     </div>

@@ -3,7 +3,7 @@ from django.views.generic import ListView, DetailView,CreateView,UpdateView,Dele
 from .models import Notes 
 from .forms import NotesForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 
 class NotesDeleteView(LoginRequiredMixin, DeleteView):
     model=Notes
@@ -12,7 +12,7 @@ class NotesDeleteView(LoginRequiredMixin, DeleteView):
     login_url="/login"
         
     def get_queryset(self):
-        return self.request.user.new_notes.all()
+        return self.request.user.notes.all()
 
 class NotesUpdateView(LoginRequiredMixin, UpdateView):
     model=Notes
@@ -22,10 +22,8 @@ class NotesUpdateView(LoginRequiredMixin, UpdateView):
     login_url="/login"
     
     def get_queryset(self):
-        return self.request.user.new_notes.all()
+        return self.request.user.notes.all()
     
-
-
 class NotesCreateView(LoginRequiredMixin, CreateView):
     model=Notes
     success_url='/smart/notes/'
@@ -46,7 +44,7 @@ class NotesList(LoginRequiredMixin, ListView):
     login_url="/login"
 
     def get_queryset(self):
-        return self.request.user.new_notes.all()
+        return self.request.user.notes.all()
 
 class NoteDetailView(LoginRequiredMixin, DetailView):
     model = Notes
@@ -55,4 +53,4 @@ class NoteDetailView(LoginRequiredMixin, DetailView):
     login_url="/login"
 
     def get_queryset(self):
-        return self.request.user.new_notes.all()
+        return self.request.user.notes.all()
