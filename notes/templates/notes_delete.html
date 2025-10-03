@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow border-danger">
+        <div class="card-header bg-danger text-white">
+          <h4 class="mb-0">Confirm Deletion</h4>
+        </div>
+        <div class="card-body">
+          <p class="fs-5">
+            Are you sure you want to delete <strong>"{{ note.title }}"</strong>?
+          </p>
+          <p class="text-muted">
+            This action <strong>cannot</strong> be undone.
+          </p>
+
+          <form action="" method="post" novalidate>
+            {% csrf_token %}
+            <div class="d-flex justify-content-between">
+              <a href="{% url 'notes.list' %}" class="btn btn-outline-secondary">
+                Cancel
+              </a>
+              <input type="submit" class="btn btn-danger" value="Yes, Delete">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

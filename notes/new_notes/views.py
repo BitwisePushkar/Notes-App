@@ -1,22 +1,58 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView,CreateView
+from django.views.generic import ListView, DetailView,CreateView,UpdateView,DeleteView
 from .models import Notes 
 from .forms import NotesForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 
+class NotesDeleteView(LoginRequiredMixin, DeleteView):
+    model=Notes
+    success_url='/smart/notes/'
+    template_name = "notes_form.html"
+    login_url="/login"
+        
+    def get_queryset(self):
+        return self.request.user.new_notes.all()
 
-class NotesCreateView(CreateView):
+class NotesUpdateView(LoginRequiredMixin, UpdateView):
     model=Notes
     success_url='/smart/notes/'
     form_class=NotesForm
     template_name = "notes_form.html"
+    login_url="/login"
+    
+    def get_queryset(self):
+        return self.request.user.new_notes.all()
+    
 
 
-class NotesList(ListView):
+class NotesCreateView(LoginRequiredMixin, CreateView):
+    model=Notes
+    success_url='/smart/notes/'
+    form_class=NotesForm
+    template_name = "notes_form.html"
+    login_url="/login"
+
+    def form_valid(self,form):
+        self.object=form.save(commit=False)
+        self.object.user =self.request.user 
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+class NotesList(LoginRequiredMixin, ListView):
     model = Notes
     context_object_name = "notes"
     template_name = "notes_list.html"
+    login_url="/login"
 
-class NoteDetailView(DetailView):
+    def get_queryset(self):
+        return self.request.user.new_notes.all()
+
+class NoteDetailView(LoginRequiredMixin, DetailView):
     model = Notes
     template_name = 'notes_details.html' 
     context_object_name = 'note'
+    login_url="/login"
+
+    def get_queryset(self):
+        return self.request.user.new_notes.all()
