@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 
-class HomeConfig(AppConfig):
+
+class NewNotesConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'home'
+    name = 'new_notes'
