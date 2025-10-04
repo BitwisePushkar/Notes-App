@@ -8,11 +8,16 @@ from django.http import HttpResponseRedirect
 class NotesDeleteView(LoginRequiredMixin, DeleteView):
     model=Notes
     success_url='/smart/notes/'
-    template_name = "notes_form.html"
+    template_name = "notes_delete.html"
     login_url="/login"
         
     def get_queryset(self):
         return self.request.user.notes.all()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['note'] = context['object'] 
+        return context
 
 class NotesUpdateView(LoginRequiredMixin, UpdateView):
     model=Notes
