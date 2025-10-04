@@ -33,6 +33,9 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'new_notes.apps.NewNotesConfig',
+    'rest_framework',
+    'info.apps.InfoConfig',
+    'api.apps.ApiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
