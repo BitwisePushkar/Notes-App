@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse, Http404
-from info.models import Info
+from .models import Info
 from .serializers import InfoSerializer, UserSerializer
 from rest_framework.response import Response
 from rest_framework import status
@@ -198,7 +198,7 @@ class InfoList(APIView):
         tags=['Info CRUD']
     )
     def get(self, request):
-        info = Info.objects.all()
+        info = Info.objects.filter(user=request.user)
         serializer = InfoSerializer(info, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
@@ -266,7 +266,7 @@ class InfoList(APIView):
     def post(self, request):
         serializer = InfoSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(user=request.user) 
             return Response({
                 'message': 'Info created successfully',
                 'data': serializer.data
@@ -279,7 +279,7 @@ class InfoDetail(APIView):
 
     def get_object(self, pk):
         try:
-            return Info.objects.get(pk=pk)
+            return Info.objects.get(pk=pk, user=self.request.user)
         except Info.DoesNotExist:
             return None
     

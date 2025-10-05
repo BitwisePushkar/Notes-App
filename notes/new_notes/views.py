@@ -4,12 +4,13 @@ from .models import Notes
 from .forms import NotesForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
 
 class NotesDeleteView(LoginRequiredMixin, DeleteView):
     model=Notes
-    success_url='/smart/notes/'
+    success_url = reverse_lazy('notes.list')
+    login_url = reverse_lazy('login')
     template_name = "notes_delete.html"
-    login_url="/login"
         
     def get_queryset(self):
         return self.request.user.notes.all()
@@ -21,10 +22,10 @@ class NotesDeleteView(LoginRequiredMixin, DeleteView):
 
 class NotesUpdateView(LoginRequiredMixin, UpdateView):
     model=Notes
-    success_url='/smart/notes/'
+    success_url = reverse_lazy('notes.list')
+    login_url = reverse_lazy('login')
     form_class=NotesForm
     template_name = "notes_form.html"
-    login_url="/login"
     
     def get_queryset(self):
         return self.request.user.notes.all()
